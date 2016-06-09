@@ -1,7 +1,8 @@
 var scrum = function(){
-
-return( ' ..this is from scrum module' );
-
+  return getRandomInt(1, 9);
 };
+function getRandomInt( min, max ){
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
 
 module.exports=scrum;
