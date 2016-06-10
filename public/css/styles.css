@@ -1,0 +1,12 @@
+#nav button {
+  margin-top: 8px;
+  margin-left: 5px;
+}
+.col-md-3 {
+    width:20%;
+    margin:0 2.5%;
+}
+.employee {
+  border: 1px solid gray;
+  padding: 10px;
+}

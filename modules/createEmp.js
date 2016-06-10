@@ -1,9 +1,6 @@
-var name=require('./name');
-var scrum=require('./scrum');
-var skill=require('./skill');
-
-
-
+var name = require('./name');
+var scrum = require('./scrum');
+var skill = require('./skill');
 
 var createEmp = function(){
   var empInfo = {
@@ -11,7 +8,6 @@ var createEmp = function(){
     scrum: scrum(),
     skill: skill()
   };
-  // var newEmp = ' ..this is from createEmp module' + name() + scrum() + skill();
   return( empInfo );
 };
 

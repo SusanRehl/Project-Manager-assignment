@@ -1,103 +1,166 @@
-console.log( 'hello world from script.js' );
-$(document).ready(function(){
-//ajax event
 var newEmp;
 var newCompanyName;
 var currentEmployees = [];
 
-$('#addEmp').on('click', function() {
-  getEmployee();
-  console.log("currentemployees" + currentEmployees);
-});
+var companyName = [ 'Target', 'Best Buy', 'General Mills', 'Medtronic',
+'Dairy Queen','3M', 'EcoLab', 'Uponor', 'Lynx', 'The Wild', 'University of Minnesota' ];
 
-var companyName = [ 'Target', 'Best Buy', 'General Mills', 'Medtronic', 'Dairy Queen',
-  '3M', 'EcoLab', 'Uponor', 'Lynx', 'The Wild', 'University of Minnesota' ];
-
-function getRandomInt( min, max ){
-    return Math.floor(Math.random() * (max - min)) + min;
-    }
-    var projectNeeds = {
-      frontEnd: '',
-      clientSide: '',
-      serverLogic: ''
+var projectNeeds = {
+  frontEnd: '',
+  clientSide: '',
+  serverLogic: ''
 };
 
-console.log(projectNeeds);
-//generate company click event
-$('#generateCompany').on('click', function(){
-//append company name to the dom
-  newCompanyName = companyName[getRandomInt(0, companyName.length - 1)];
-  projectNeeds = {
-    frontEnd: getRandomInt(10, 60),
-    clientSide: getRandomInt(10, 60),
-    serverLogic: getRandomInt(10, 60)
+var totalSkills = {
+  frontEnd: 0,
+  clientSide: 0,
+  serverLogic: 0
+};
+
+var weekNeeds = {
+  frontEnd: 0,
+  clientSide: 0,
+  serverLogic: 0
+};
+
+$(document).ready(function(){
+
+  $('#assignStaff').hide();
+
+  $('#generateCompany').on('click', function(){
+    newCompanyName = companyName[getRandomInt(0, companyName.length)];
+    projectNeeds = {
+      frontEnd: getRandomInt(10, 60),
+      clientSide: getRandomInt(10, 60),
+      serverLogic: getRandomInt(10, 60)
     };
-      if ($('.assignStaff').length == 1){
-        $('.assignStaff').remove();
-        generateProject();
-      } else{
-        generateProject();
-      }
+    $('#assignStaff').show();
+
+    generateProject();
+
   });
 
-function generateProject() {
-  assignStaff = document.createElement( 'button' );
-  assignStaff.className = 'assignStaff';
+  $("#assignStaff").on("click", function(){
+    $('#addEmp').show();
+    generateStaff();
+    var weekEl = document.createElement('p');
+    weekEl.id = "weekCounter";
+    weekEl.innerHTML = 'Weeks to complete project: ' + getMostWeeks();
+    document.getElementById('project').appendChild( weekEl );
+  });
 
-  assignStaff.innerHTML = 'Assign Staff';
-  document.getElementById('nav').appendChild( assignStaff );
-  // alert( companyName[getRandomInt(0, companyName.length - 1)] );
+  $('#addEmp').hide();
 
-   $('#companyName').text(newCompanyName);
-   $('#frontEnd').text("Front End: " + projectNeeds.frontEnd);
-   $('#clientSide').text("Client Side Logic: " + projectNeeds.clientSide);
-   $('#serverLogic').text("Server Side Logic: " + projectNeeds.serverLogic);
-}//end project generation function
+  $('#addEmp').on('click', function() {
+    getEmployee();
+    var newDiv = document.createElement('div');
+    newDiv.className = 'col-md-3 employee';
+    newDiv.id = 'page-container';
+    document.getElementById('page-container').appendChild(newDiv);
 
-// assign staff button
-$("body").on("click", ".assignStaff",function(){
-  // console.log("clicked in assign Staff");
+    $('.employee').append('<h4>Name: ' + newEmp.name + '</h4>');
+    $('.employee').append('<p>Skill: ' + newEmp.skill + '</p>');
+    $('.employee').append('<p>Scrum: ' + newEmp.scrum + '</p>');
 
-  generateStaff();
-  // console.log("generateStaff = " + generateStaff());
+    $('#weekCounter').text('Weeks to complete project: ' + getMostWeeks());
+    console.log("currentemployees" + currentEmployees);
+    console.log(newEmp);
+  });
+
 });
+
+$('#project').hide();
+
+function generateProject() {
+  currentEmployees = [];
+
+  totalSkills.frontEnd = 0;
+  totalSkills.clientSide = 0;
+  totalSkills.serverLogic = 0;
+
+  $('#weekCounter').text('');
+
+  $('#employeeContainer').empty();
+
+  $('#project').show();
+  $('#companyName').text(newCompanyName);
+  $('#frontEnd').text("Front End: " + projectNeeds.frontEnd);
+  $('#clientSide').text("Client Side Logic: " + projectNeeds.clientSide);
+  $('#serverLogic').text("Server Side Logic: " + projectNeeds.serverLogic);
+}
 
 var frontEnd = false;
 var clientLogic = false;
 var serverLogic = false;
 
-var skillsCovered = false;
+var skillsCovered = (serverLogic) && (clientLogic) && (frontEnd);
+var skillsArray = [];
 
 function generateStaff(){
+  getEmployee();
+  console.log(newEmp);
+  var newDiv = document.createElement('div');
+  newDiv.className = 'col-md-3 employee';
+  document.getElementById('employeeContainer').appendChild(newDiv);
 
-    while (skillsCovered === false) {
-
-      getEmployee();
-      console.log("NEWEMP.SKILL = " + newEmp.skill);
-      // console.log(newEmp);
-      if ( newEmp.skill == "Client Side Logic" ){
-        skillsCovered = true;
-        console.log("skills log as true");
-    }
-      else {
-        skillsCovered = true;
-      }
-
-      // console.log("clientLogic = true");
-    // }
-    //   else if ( newEmp.skill === "Front End" ){
-    //   frontEnd = true;
-    //
-    // } else if  ( newEmp.skill === "Server Side Logic"){
-    //   serverLogic = true;
+  $('.employee').append('<h4>Name: ' + newEmp.name + '</h4>');
+  $('.employee').append('<p>Skill: ' + newEmp.skill + '</p>');
+  $('.employee').append('<p>Scrum: ' + newEmp.scrum + '</p>');
 
 
-    }
-    console.log(skillsCovered);
+  for (var i = 0; i < currentEmployees.length; i++) {
+    skillsArray.push(currentEmployees[i].skill);
   }
-  console.log("currentEmployees " + currentEmployees[0]);
+
+  // console.log(skillsArray);
+
+  if ( skillsArray.indexOf('Front End') >= 0 ) {
+    if ( skillsArray.indexOf("Client Side Logic") >= 0) {
+      if ( skillsArray.indexOf("Server Side Logic")  >= 0) {
+        console.log('succes');
+        return;
+      } else {
+        generateStaff();
+      }
+    } else {
+      generateStaff();
+    }
+  } else {
+    generateStaff();
+  }
 }
-//end generate company function
+
+function getRandomInt( min, max ){
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function totalSkills() {
+  for (var i = 0; i < currentEmployees.length; i++) {
+    skillsArray.push(currentEmployees[i].skill);
+  }
+}
+
+function getWeeks() {
+  weekNeeds.frontEnd = projectNeeds.frontEnd / totalSkills.frontEnd;
+  weekNeeds.clientSide = projectNeeds.clientSide / totalSkills.clientSide;
+  weekNeeds.clientSide = projectNeeds.clientSide / totalSkills.clientSide;
+}
+
+function getMostWeeks() {
+  if (weekNeeds.frontEnd > weekNeeds.clientSide) {
+    if ( weekNeeds.serverLogic > weekNeeds.frontEnd) {
+      return weekNeeds.serverLogic;
+    } else {
+      return weekNeeds.frontEnd;
+    }
+  } else {
+    if ( weekNeeds.serverLogic > weekNeeds.clientSide) {
+      return weekNeeds.serverLogic;
+    } else {
+      return weekNeeds.clientSide;
+    }
+  }
+}
 
 function getEmployee() {
   $.ajax({
@@ -105,13 +168,22 @@ function getEmployee() {
     async: false,
     success: function( data ){
       newEmp = data;
+      if (newEmp.skill == "Front End") {
+        totalSkills.frontEnd += newEmp.scrum;
+      } else if (newEmp.skill == "Client Side Logic") {
+        totalSkills.clientSide += newEmp.scrum;
+      } else if (newEmp.skill == "Server Side Logic") {
+        totalSkills.serverLogic += newEmp.scrum;
+      }
       currentEmployees.push(newEmp);
+      console.log('employees' + currentEmployees);
+      console.log(totalSkills);
+      getWeeks();
+      console.log(weekNeeds);
+      console.log(getMostWeeks());
     },
     error: function(){
       alert( 'Error accessing JSON');
     }
-  });// end ajax
-} // end getEmployess
-
-
-}); // end document.ready
+  });
+}

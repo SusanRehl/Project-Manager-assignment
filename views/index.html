@@ -4,30 +4,59 @@
     <meta charset="utf-8">
 
     <title>ProjectManagement</title>
+    <link rel="stylesheet" href="vendors/bootstrap.min.css" charset="utf-8">
+    <link rel="stylesheet" href="css/styles.css" charset="utf-8">
   </head>
   <body>
-    <h1> Project Management Tool </h1>
-    <div id="nav">
-      <button type="button" id="generateCompany" >Generate Project</button>
-      <button type="button" id="addEmp">Add an Employee</button>
-    </div>
 
-      <div id="counter">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Project Management Tool</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul id="nav" class="nav navbar-nav">
+            <button id="generateCompany" class="btn btn-default">Generate Project</button>
+            <button id="assignStaff" class="btn btn-default">Assign Staff</button>
+            <button id="addEmp" class="btn btn-default">Add Employee</button>
+          </ul>
+        </div>
       </div>
+    </nav>
 
-    <div id="project">
-      <h1 id="companyName"></h1>
-      <ul>
-        <li id="frontEnd"></li>
-        <li id="clientSide"></li>
-        <li id="serverLogic"></li>
-      </ul>
+    <div id="page-container" class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <div id="project" class="well">
+            <h1 id="companyName"></h1>
+            <div class="row">
+              <div class="col-sm-4">
+                <p id="frontEnd"></p>
+              </div>
+              <div class="col-sm-4">
+                <p id="clientSide"></p>
+              </div>
+              <div class="col-sm-4">
+                <p id="serverLogic"></p>
+              </div>
+            </div>
+            <hr>
+          </div>
+        </div>
+      </div>
+      <div id="employeeContainer" class="row"></div>
     </div>
 
-
-
-<script src="vendors/jquery.js" charset="utf-8"></script>
-<script type="text/javascript" src='js/script.js'></script>
-</body>
+    <script src="vendors/jquery.js" charset="utf-8"></script>
+    <script src="vendors/bootstrap.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src='js/script.js'></script>
+  </body>
 
 </html>
